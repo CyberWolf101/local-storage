@@ -1,0 +1,130 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>storage settings 2</title>
+	<style type="text/css">
+		body{
+background-color: beige;
+color: silver;
+		}
+
+button{
+	background:rgb(39, 209, 82) ;
+	border: 2px solid black;
+	border-radius: 7px;
+	padding: 10px;
+}
+button:hover{
+  background: green;
+ color: white;
+}
+input{
+	padding: 10px;
+	width: 220px;
+	background-color: rgb(228, 222, 222);
+	border: 1px solid black;
+}
+input:hover{
+	background-color: rgb(247, 242, 242);
+}
+
+#nameArea{
+	display: block;
+ background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+ padding: 15px;
+}
+#new_text{
+         color: rgb(236, 232, 232);
+         font-weight: bold;
+}
+#welcome{
+	display: none;
+	background: #517fa4;
+	padding: 10px;
+}
+#not_message{
+	background-color: transparent;
+	color: navy;
+	border: none;
+	text-decoration: underline;
+}
+#not_message:hover{
+	color: rgb(14, 14, 179);
+}
+
+
+
+	</style>
+</head>
+<body>
+
+<div id="nameArea" >
+
+ <h3>Input name below</h3>
+  <form>
+       <label><b>Name:</b></label><br>
+       <input type="text" id="name_user" name="fname" placeholder="Type your name..."><br><br>
+  </form>
+
+  <button id="Submit">Submit</button>
+
+</div>
+
+<div id="welcome">
+      <section id="new_text"></section>
+      <br>
+      <h5>
+	        <button id="not_message"> </button>
+      </h5>
+</div>
+</body>
+<script>
+
+
+
+document.getElementById('Submit').onclick = function(){
+
+var user_name = document.getElementById('name_user').value;
+
+if(!user_name){
+	alert('please type your name!');
+}else{
+	localStorage.setItem('name', user_name);
+	greet_user();          //i.e if it's not empty, we greet the user right away instead of waiting till you refresh.(The code written below will handle the rest)
+}
+
+document.getElementById('name_user').value = "";  // this particular line of code will make the input field empty after "not message" has been clicked without refreshing
+}
+
+function greet_user(){
+	document.getElementById('nameArea').style.display = 'none'; 
+	document.getElementById('welcome').style.display = 'block'; 
+	document.getElementById('new_text').innerHTML = "Hello " + localStorage.name + ", how are you";
+	document.getElementById('not_message').innerHTML = "Not " + localStorage.name + "?"
+
+}
+
+
+	
+if (localStorage.name) {              //if name exists in local storge
+	greet_user();                     // this particular code ensures that if the is a name in local storage, after refreshing, the function greeet_user will always be executed
+}                                     //if you remove this line of code, the greet user function will not be executed after refreshing!
+
+
+document.getElementById('not_message').onclick = function(){
+	
+    localStorage.removeItem('name');
+	document.getElementById('nameArea').style.display = 'block'; 
+	document.getElementById('welcome').style.display = 'none'; 
+}
+
+
+
+
+
+
+</script>
+
+</html>
